@@ -11,19 +11,70 @@ def range(a, b=None, c=None):
     [1, 3]
 
     HINT:
-    If you can figure out how to use the built-in range function (without modifying the test cases!),
+    If you can figure out how to use the built-in
+    range function (without modifying the test cases!),
     then feel free to do so.
-    That's fairly difficult to do, however, and it's much easier to just implement this function normally using the yield syntax.
+    That's fairly difficult to do, however, and
+    it's much easier to just implement this function normally
+    using the yield syntax.
 
     NOTE:
-    For efficiency reasons, Python's built-in range object is written in the C programming language rather than natively in python.
-    You can find the source code online at https://hg.python.org/cpython/file/ee7b713fec71/Objects/rangeobject.c
+    For efficiency reasons, Python's built-in range object is
+    written in the C programming language rather than natively in python.
+    You can find the source code online at https://hg.python.org/cpython
+    /file/ee7b713fec71/Objects/rangeobject.c
     The link takes you to a file that is 1445 lines long,
     and all it does is implement this simple functionality.
-    My easy to read Python implementation of this function is just 15 lines long.
-    (And with some code golf I also wrote a less readable version that is only 4 lines.)
-    It is very common for C programs to be 100x longer than their corresponding python programs.
-    C code must manage lots of details about the computer manually that python code automates for you.
-    Carefully written C code can be faster than the corresponding python code because it can remove some of the overhead of this automation process,
+    My easy to read Python implementation of this function is just 15
+    lines long.
+    (And with some code golf I also wrote a less readable version that is only
+    4 lines.)
+    It is very common for C programs to be 100x longer than their
+    corresponding python programs.
+    C code must manage lots of details about the computer manually that
+    python code automates for you.
+    Carefully written C code can be faster than the corresponding python
+    code because it can remove some of the overhead of this automation process,
     but the resulting code is much longer and harder to read/write.
     '''
+    if a == -1:
+        return []
+    i = -1
+    if b is None and c is None:
+        if a <= 0:
+            i = 1
+            while i > a + 1:
+                i += -1
+                yield i
+        else:
+            while i < a - 1:
+                i += 1
+                yield i
+    if b is not None and c is None:
+        i = a - 1
+        while i < b - 1:
+            i += 1
+            yield i
+    else:
+        if c is not None and b is not None:
+            if a < 0 or b < 0:
+                i = a - c
+                if a > c:
+                    while i > b - 1:
+                        i += c
+                        if i > b:
+                            yield i
+            else:
+                i = a - c
+                if a < c:
+                    while i < b - 1:
+                        i += c
+                        if i < b:
+                            yield i
+        else:
+            i = a
+            if a:
+                while i < a-1:
+                    i += 1
+                    if i < b:
+                        yield i
