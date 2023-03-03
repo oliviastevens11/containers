@@ -92,7 +92,7 @@ class FibIter:
     def __next__(self):
         if self.n is None:
             yo = self.a
-            self.a, self.b = self.b, self.b+self.a
+            self.a, self.b = self.b, self.b + self.a
             return yo
 
         if self.n is not None:
