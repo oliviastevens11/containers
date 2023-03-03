@@ -74,7 +74,7 @@ def range(a, b=None, c=None):
         else:
             i = a
             if a:
-                while i < a-1:
+                while i < a - 1:
                     i += 1
                     if i < b:
                         yield i
