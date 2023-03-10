@@ -19,6 +19,10 @@ class BST(BinaryTree):
         If xs is a list (i.e. xs is not None),
         then each element of xs needs to be inserted into the BST.
         '''
+        self.root = None
+        self.size = 0
+        if xs: 
+            self.insert_list(xs)
         super().__init__()
 
     def __repr__(self):
@@ -63,12 +67,12 @@ class BST(BinaryTree):
         '''
         ret = True
         if node.left:
-            if node.value >= node.left.value:
+            if node.value > BST._find_largest(node.left) and node.left.value:
                 ret &= BST._is_bst_satisfied(node.left)
             else:
                 ret = False
         if node.right:
-            if node.value <= node.right.value:
+            if node.value < BST._find_smallest(node.right) and node.right.value:
                 ret &= BST._is_bst_satisfied(node.right)
             else:
                 ret = False
@@ -84,6 +88,22 @@ class BST(BinaryTree):
         HINT:
         Create a staticmethod helper function following the pattern of _is_bst_satisfied.
         '''
+        if self.root:
+            self._insert(self, value)
+        else:
+            self.root = value
+
+    @staticmethod
+    def _insert(node, value):
+        if node is None:
+            return None 
+        else:
+            if value <= node.value:
+                node.left = insert(node.left, value)
+            else:
+                node.right = insert(node.right, value)
+        return node
+
 
     def insert_list(self, xs):
         '''
@@ -117,13 +137,20 @@ class BST(BinaryTree):
         FIXME:
         Implement this function.
         '''
+        if node is None:
+            return False
+        elif node.value == value:
+            return True
+        else:
+            return _find(value, node.left) 
 
     def find_smallest(self):
         '''
         Returns the smallest value in the tree.
         '''
         if self.root is None:
-            raise ValueError('Nothing in tree')
+            return None
+            #raise ValueError('Nothing in tree')
         else:
             return BST._find_smallest(self.root)
 
@@ -148,6 +175,20 @@ class BST(BinaryTree):
         HINT:
         Follow the pattern of the _find_smallest function.
         '''
+        if self.root is None:
+            return None
+            #raise ValueError('Nothing in tree')
+        else:
+            return BST._find_largest(self.root)
+    
+    @staticmethod
+    def _find_largest(node):
+        assert node is not None
+        if node.right is None:
+            return node.value
+        else:
+            return BST._find_largest(node.right)
+
 
     def remove(self, value):
         '''
@@ -172,5 +213,4 @@ class BST(BinaryTree):
         Implement this function.
 
         HINT:
-        See the insert_list function.
         '''
