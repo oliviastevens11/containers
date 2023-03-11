@@ -211,7 +211,7 @@ class BinaryTree():
         '''
         if node:
             a = 1 + BinaryTree.__len__h(node.left) \
-               + BinaryTree.__len__h(node.right)
+                + BinaryTree.__len__h(node.right)
             return a
         else:
             return 0
