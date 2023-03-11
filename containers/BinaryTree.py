@@ -89,7 +89,7 @@ class BinaryTree():
             return self.postorder_print(self.root, '')
         else:
             raise ValueError('Traversal type' + str(traversal_type)
-                             + 'is not supported.')
+                    + 'is not supported.')
 
     def preorder_print(self, start, traversal):
         '''
@@ -211,8 +211,8 @@ class BinaryTree():
         return the sum of these three steps
         '''
         if node:
-            return 1 + BinaryTree.__len__helper(node.left) \
-                       + BinaryTree.__len__helper(node.right)
+            return (1 + BinaryTree.__len__helper(node.left)
+                    + BinaryTree.__len__helper(node.right))
         else:
             return 0
 
