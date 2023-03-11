@@ -192,10 +192,10 @@ class BinaryTree():
         Returns the number of elements contained in the tree.
         Recall that `tree.__len__()` will desugar to `size(len)`.
         '''
-        return BinaryTree.__len__helper(self.root)
+        return BinaryTree.__len__h(self.root)
 
     @staticmethod
-    def __len__helper(node):
+    def __len__h(node):
         '''
         FIXME:
         Implement this function.
@@ -210,8 +210,9 @@ class BinaryTree():
         return the sum of these three steps
         '''
         if node:
-            return (1 + BinaryTree.__len__helper(node.left) +
-                    BinaryTree.__len__helper(node.right))
+            a = 1 + BinaryTree.__len__h(node.left) \
+                    + BinaryTree.__len__h(node.right)
+            return a
         else:
             return 0
 
