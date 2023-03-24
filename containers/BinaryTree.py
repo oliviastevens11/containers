@@ -204,7 +204,7 @@ class BinaryTree():
         The pseudocode is:
         add 1 for the current node;
         if a left child exists, add the result of
-        __len__helper on the left child;
+        __len__elper on the left child;
         if a right child exists, add the result of
         __len__helper on the right child;
         return the sum of these three steps
