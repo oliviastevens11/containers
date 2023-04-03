@@ -251,7 +251,7 @@ class BST(BinaryTree):
         if self.root:
             self.root = self._remove(self.root, value)
             if self.root is not None:
-                self.size = 1
+                self.size -= 1
         else:
             return None
 
