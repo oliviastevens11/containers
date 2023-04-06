@@ -52,22 +52,6 @@ class BST(BinaryTree):
         '''
         return type(self).__name__ + '(' + str(self.to_list('inorder')) + ')'
 
-    def __eq__(self, t2):
-        '''
-        This method checks to see if the contents of self and t2 are equal.
-        The expression `a == b` desugars to `a.__eq__(b)`.
-
-        NOTE:
-        We only care about "semantic" equality,
-        and not "syntactic" equality.
-        That is, we do not care about the tree structure itself,
-        and only care about the contents of what the tree contains.
-
-        HINT:
-        Convert the contents of both trees into a sorted list,
-        then compare those sorted lists for equality.
-        '''
-
     def is_bst_satisfied(self):
         '''
         Whenever you implement a data structure,
@@ -247,16 +231,45 @@ class BST(BinaryTree):
 
         HINT:
         Use a recursive helper function.
-        '''
         if self.root:
             self.root = self._remove(self.root, value)
             if self.root is not None:
                 self.size -= 1
         else:
             return None
+        '''
+        self.root = BST._remove(self.root, value)
 
     @staticmethod
     def _remove(node, value):
+        if node is None:
+            return
+        if value > node.value and node.right:
+            node.right = BST._remove(node.right, value)
+            return node
+        elif value < node.value and node.left:
+            node.left = BST._remove(node.left, value)
+            return node
+        elif value == node.value:
+            if node.left is None and node.right is None:
+                return None
+            elif node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            else:
+                smallest = BST._find_smallest(node.right)
+                if smallest == node.right.value:
+                    ret = node.right
+                    ret.left = node.left
+                else:
+                    ret = Node(smallest)
+                    ret.left = node.left
+                    ret.right = BST._remove(node.right, smallest)
+                return ret
+        else:
+            return node
+        '''
         if node is None:
             return None
         if value < node.value:
@@ -273,7 +286,7 @@ class BST(BinaryTree):
                 node.value = min_node
                 node.right = BST._remove(node.right, min_node)
         return node
-
+        '''
     def remove_list(self, xs):
         '''
         Given a list xs, remove each element of xs from self.
@@ -285,3 +298,26 @@ class BST(BinaryTree):
         '''
         for x in xs:
             self.remove(x)
+
+    def __eq__(self, t2):
+        '''
+        This method checks to see if the contents of self and t2 are equal.
+        The expression `a == b` desugars to `a.__eq__(b)`.
+        NOTE:
+        We only care about "semantic" equality,
+        and not "syntactic" equality.
+        That is, we do not care about the tree structure itself,
+        and only care about the contents of what the tree
+        contains.
+        HINT:
+        Convert the contents of both trees into a sorted list,
+        then compare those sorted lists for equality.
+        '''
+        if self is None and t2 is None:
+            return False
+        list1 = []
+        list2 = []
+        self.inorder(self.root, list1)
+        self.inorder(t2.root, list2)
+
+        return list1 == list2
