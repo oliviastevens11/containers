@@ -323,26 +323,3 @@ class BST(BinaryTree):
         '''
         for x in xs:
             self.remove(x)
-
-    def __eq__(self, t2):
-        '''
-        This method checks to see if the contents of self and t2 are equal.
-        The expression `a == b` desugars to `a.__eq__(b)`.
-        NOTE:
-        We only care about "semantic" equality,
-        and not "syntactic" equality.
-        That is, we do not care about the tree structure itself,
-        and only care about the contents of what the tree
-        contains.
-        HINT:
-        Convert the contents of both trees into a sorted list,
-        then compare those sorted lists for equality.
-        '''
-        if self is None and t2 is None:
-            return False
-        list1 = []
-        list2 = []
-        self.inorder(self.root, list1)
-        self.inorder(t2.root, list2)
-
-        return list1 == list2
